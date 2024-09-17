@@ -11,6 +11,7 @@ import { DropdownMenuIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import {RegisterLink, LoginLink, LogoutLink} from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import Link from 'next/link';
+import { CreateAirbnbHome } from '../actions';
 
 
 
@@ -19,6 +20,10 @@ const UserNav = async() => {
 
   const {getUser} = getKindeServerSession()
   const user = await getUser()
+
+  const createHomewithId= CreateAirbnbHome.bind(null,{
+    userId: user?.id as string
+  })
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -39,7 +44,7 @@ const UserNav = async() => {
         {user ? (
           <>
             <DropdownMenuItem>
-             <form action="" className='w-full'>
+             <form action={createHomewithId} className='w-full'>
               <button type='submit' className='w-full text-start'>
                 Airbnb Your Home
               </button>
